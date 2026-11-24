@@ -1,0 +1,250 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scenes/main/main.gd" id="1"]
+[ext_resource type="Script" path="res://scenes/main/orbit_backdrop.gd" id="2"]
+
+[sub_resource type="SystemFont" id="SystemFont_ko"]
+font_names = PackedStringArray("Malgun Gothic", "Noto Sans CJK KR")
+allow_system_fallback = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_normal"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+bg_color = Color(0.075, 0.114, 0.18, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.17, 0.24, 0.35, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_hover"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+bg_color = Color(0.13, 0.20, 0.30, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_primary"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+bg_color = Color(0.16, 0.36, 0.64, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_focus"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.61, 0.78, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="Theme" id="Theme_main"]
+default_font = SubResource("SystemFont_ko")
+default_font_size = 20
+Button/colors/font_color = Color(0.91, 0.94, 0.99, 1)
+Button/styles/normal = SubResource("StyleBox_normal")
+Button/styles/hover = SubResource("StyleBox_hover")
+Button/styles/pressed = SubResource("StyleBox_primary")
+Button/styles/focus = SubResource("StyleBox_focus")
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_main")
+script = ExtResource("1")
+
+[node name="OrbitBackdrop" type="Control" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2")
+
+[node name="Content" type="VBoxContainer" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 84.0
+offset_top = -282.0
+offset_right = 588.0
+offset_bottom = 282.0
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.93, 0.97, 1, 1)
+theme_override_font_sizes/font_size = 64
+text = "UNIVERSE 360"
+
+[node name="Subtitle" type="Label" parent="Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.81, 0.91, 1)
+text = "우주 탐험과 문명 건설 · G0 개발 빌드"
+
+[node name="Gap" type="Control" parent="Content"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Menu" type="VBoxContainer" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+custom_minimum_size = Vector2(300, 0)
+theme_override_constants/separation = 8
+
+[node name="NewGame" type="Button" parent="Content/Menu"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBox_primary")
+text = "새 게임"
+alignment = 0
+
+[node name="Continue" type="Button" parent="Content/Menu"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "이어하기"
+alignment = 0
+
+[node name="Settings" type="Button" parent="Content/Menu"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "옵션"
+alignment = 0
+
+[node name="Quit" type="Button" parent="Content/Menu"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "종료"
+alignment = 0
+
+[node name="Session" type="VBoxContainer" parent="Content"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Location" type="Label" parent="Content/Session"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+
+[node name="Resources" type="Label" parent="Content/Session"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Time" type="Label" parent="Content/Session"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ClockControls" type="HBoxContainer" parent="Content/Session"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Pause" type="Button" parent="Content/Session/ClockControls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(126, 48)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "일시정지"
+
+[node name="SpeedLabel" type="Label" parent="Content/Session/ClockControls"]
+layout_mode = 2
+text = "   배속"
+
+[node name="Speed" type="OptionButton" parent="Content/Session/ClockControls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(94, 48)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+accessibility_name = "게임 배속"
+
+[node name="GameControls" type="HBoxContainer" parent="Content/Session"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Save" type="Button" parent="Content/Session/GameControls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(124, 48)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBox_primary")
+text = "저장"
+
+[node name="Load" type="Button" parent="Content/Session/GameControls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(124, 48)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "불러오기"
+
+[node name="SessionQuit" type="Button" parent="Content/Session/GameControls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(90, 48)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "종료"
+
+[node name="Status" type="Label" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
+theme_override_colors/font_color = Color(0.83, 0.89, 0.97, 1)
+theme_override_font_sizes/font_size = 17
+autowrap_mode = 2
+accessibility_live = 1
+
+[node name="Help" type="Label" parent="Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.73, 0.82, 1)
+theme_override_font_sizes/font_size = 16
+text = "Tab 이동   ·   Enter 선택"
+
+[node name="Options" type="AcceptDialog" parent="."]
+unique_name_in_owner = true
+title = "옵션"
+min_size = Vector2i(320, 150)
+
+[node name="DefaultSpeed" type="OptionButton" parent="Options"]
+unique_name_in_owner = true
+offset_left = 12.0
+offset_top = 42.0
+offset_right = 308.0
+offset_bottom = 86.0
+accessibility_name = "새 게임 기본 배속"
+
+[node name="OptionsTitle" type="Label" parent="Options"]
+offset_left = 12.0
+offset_top = 10.0
+text = "새 게임 기본 배속"
+
+[node name="Backup" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+title = "저장 복구"
