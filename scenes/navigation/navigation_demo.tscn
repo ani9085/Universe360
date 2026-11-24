@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scenes/navigation/navigation_demo.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/navigation/navigation_view.tscn" id="2"]
+
+[sub_resource type="SystemFont" id="SystemFont_Korean"]
+font_names = PackedStringArray("Malgun Gothic", "Noto Sans CJK KR")
+
+[sub_resource type="Theme" id="Theme_demo"]
+default_font = SubResource("SystemFont_Korean")
+default_font_size = 17
+
+[node name="NavigationDemo" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_demo")
+script = ExtResource("1")
+
+[node name="Layout" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="NavigationView" parent="Layout" instance=ExtResource("2")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Footer" type="PanelContainer" parent="Layout"]
+layout_mode = 2
+
+[node name="Inset" type="MarginContainer" parent="Layout/Footer"]
+layout_mode = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 9
+
+[node name="Tools" type="HBoxContainer" parent="Layout/Footer/Inset"]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="Status" type="Label" parent="Layout/Footer/Inset/Tools"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "항법 독립 실행 · Esc 일시정지"
+
+[node name="Pause" type="Button" parent="Layout/Footer/Inset/Tools"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(110, 44)
+text = "일시정지"
+
+[node name="Speed" type="OptionButton" parent="Layout/Footer/Inset/Tools"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(88, 44)
+accessibility_name = "게임 배속"
+
+[node name="Save" type="Button" parent="Layout/Footer/Inset/Tools"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(88, 44)
+text = "저장"
+
+[node name="Load" type="Button" parent="Layout/Footer/Inset/Tools"]
+unique_name_in_owner = true
+layout_mode = 2
+custom_minimum_size = Vector2(105, 44)
+text = "불러오기"

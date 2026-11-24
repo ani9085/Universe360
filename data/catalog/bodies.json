@@ -1,0 +1,141 @@
+{
+  "sources": {
+    "jpl_planet_physical": {
+      "source_url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+      "retrieved_at": "2026-11-25",
+      "data_status": "observed",
+      "epoch": null,
+      "license_note": "NASA/JPL Solar System Dynamics public-domain numerical data; no endorsement."
+    },
+    "jpl_planet_orbit": {
+      "source_url": "https://ssd.jpl.nasa.gov/planets/approx_pos.html#tables",
+      "retrieved_at": "2026-11-25",
+      "data_status": "modelled",
+      "epoch": "2000-01-01T12:00:00 TDB (J2000)",
+      "license_note": "NASA/JPL Solar System Dynamics public-domain numerical data; no endorsement. Table 1; semimajor axis converted from au to km and initial mean longitude used in a circular model."
+    },
+    "jpl_lunar_physical": {
+      "source_url": "https://ssd.jpl.nasa.gov/sats/phys_par/",
+      "retrieved_at": "2026-11-25",
+      "data_status": "observed",
+      "epoch": null,
+      "license_note": "NASA/JPL Solar System Dynamics public-domain numerical data; no endorsement."
+    },
+    "jpl_lunar_orbit": {
+      "source_url": "https://ssd.jpl.nasa.gov/sats/elem/",
+      "retrieved_at": "2026-11-25",
+      "data_status": "modelled",
+      "epoch": "2000-01-01T12:00:00 TDB (J2000)",
+      "license_note": "NASA/JPL Solar System Dynamics public-domain numerical data; no endorsement. Lunar mean elements; circular phase is mean anomaly plus argument of periapsis and longitude of ascending node."
+    },
+    "jpl_solar_mass": {
+      "source_url": "https://ssd.jpl.nasa.gov/astro_par.html",
+      "retrieved_at": "2026-11-25",
+      "data_status": "modelled",
+      "epoch": null,
+      "license_note": "NASA/JPL Solar System Dynamics public-domain numerical data; no endorsement. Mass estimated from DE440 GM and CODATA G, rounded."
+    },
+    "jpl_lunar_mass": {
+      "source_url": "https://ssd.jpl.nasa.gov/sats/phys_par/",
+      "retrieved_at": "2026-11-25",
+      "data_status": "modelled",
+      "epoch": null,
+      "license_note": "NASA/JPL Solar System Dynamics public-domain numerical data; no endorsement. Mass estimated from DE440 GM and CODATA G, rounded."
+    },
+    "nasa_solar_radius": {
+      "source_url": "https://science.nasa.gov/universe/glossary/",
+      "retrieved_at": "2026-11-25",
+      "data_status": "modelled",
+      "epoch": null,
+      "license_note": "Public reference; numerical fact only. No imagery or report text redistributed. Nominal solar radius."
+    },
+    "nasa_proxima": {
+      "source_url": "https://science.nasa.gov/sun/facts/",
+      "retrieved_at": "2026-11-25",
+      "data_status": "observed",
+      "epoch": null,
+      "license_note": "Public reference; numerical fact only. No imagery or report text redistributed."
+    },
+    "esa_stars": {
+      "source_url": "https://www.esa.int/gsp/ACT/doc/ARI/ARI%20Study%20Report/ACT-RPT-MAD-ARI-03-4102b-InterstellarTravels-Padova.pdf",
+      "retrieved_at": "2026-11-25",
+      "data_status": "observed",
+      "epoch": null,
+      "license_note": "Public reference; numerical fact only. No imagery or report text redistributed. Table 1, Sun-relative distances rounded."
+    },
+    "game_landing": {
+      "source_url": null,
+      "retrieved_at": null,
+      "data_status": "modelled",
+      "epoch": null,
+      "license_note": "UNIVERSE 360 landing eligibility is a gameplay rule."
+    }
+  },
+  "bodies": [
+    {
+      "id": "sol", "parent_id": null, "name": "태양 (Sun)", "kind": "star",
+      "radius_km": 695700, "orbit_radius_km": null, "distance_ly": null, "landable": false,
+      "mass_kg": 1.9884e+30, "phase_deg": null, "period_days": null, "provenance": {"radius_km":"nasa_solar_radius","mass_kg":"jpl_solar_mass","landable":"game_landing"}
+    },
+    {
+      "id": "sol.mercury", "parent_id": "sol", "name": "수성 (Mercury)", "kind": "planet",
+      "radius_km": 2439.4, "orbit_radius_km": 57909227, "distance_ly": null, "landable": false,
+      "mass_kg": 3.30103e+23, "phase_deg": 252.2503235, "period_days": 87.96926, "provenance": {"radius_km":"jpl_planet_physical","mass_kg":"jpl_planet_physical","orbit_radius_km":"jpl_planet_orbit","position":"jpl_planet_orbit","landable":"game_landing"}
+    },
+    {
+      "id": "sol.venus", "parent_id": "sol", "name": "금성 (Venus)", "kind": "planet",
+      "radius_km": 6051.8, "orbit_radius_km": 108209475, "distance_ly": null, "landable": false,
+      "mass_kg": 4.86731e+24, "phase_deg": 181.9790995, "period_days": 224.7008, "provenance": {"radius_km":"jpl_planet_physical","mass_kg":"jpl_planet_physical","orbit_radius_km":"jpl_planet_orbit","position":"jpl_planet_orbit","landable":"game_landing"}
+    },
+    {
+      "id": "sol.earth", "parent_id": "sol", "name": "지구 (Earth)", "kind": "planet",
+      "radius_km": 6371.0084, "orbit_radius_km": 149598261, "distance_ly": null, "landable": false,
+      "mass_kg": 5.97217e+24, "phase_deg": 100.46457166, "period_days": 365.25636, "provenance": {"radius_km":"jpl_planet_physical","mass_kg":"jpl_planet_physical","orbit_radius_km":"jpl_planet_orbit","position":"jpl_planet_orbit","landable":"game_landing"}
+    },
+    {
+      "id": "sol.mars", "parent_id": "sol", "name": "화성 (Mars)", "kind": "planet",
+      "radius_km": 3389.5, "orbit_radius_km": 227943822, "distance_ly": null, "landable": true,
+      "mass_kg": 6.41691e+23, "phase_deg": -4.55343205, "period_days": 686.97959, "provenance": {"radius_km":"jpl_planet_physical","mass_kg":"jpl_planet_physical","orbit_radius_km":"jpl_planet_orbit","position":"jpl_planet_orbit","landable":"game_landing"}
+    },
+    {
+      "id": "sol.jupiter", "parent_id": "sol", "name": "목성 (Jupiter)", "kind": "planet",
+      "radius_km": 69911, "orbit_radius_km": 778340817, "distance_ly": null, "landable": false,
+      "mass_kg": 1.898125e+27, "phase_deg": 34.39644051, "period_days": 4332.82013, "provenance": {"radius_km":"jpl_planet_physical","mass_kg":"jpl_planet_physical","orbit_radius_km":"jpl_planet_orbit","position":"jpl_planet_orbit","landable":"game_landing"}
+    },
+    {
+      "id": "sol.saturn", "parent_id": "sol", "name": "토성 (Saturn)", "kind": "planet",
+      "radius_km": 58232, "orbit_radius_km": 1426666414, "distance_ly": null, "landable": false,
+      "mass_kg": 5.68317e+26, "phase_deg": 49.95424423, "period_days": 10755.69864, "provenance": {"radius_km":"jpl_planet_physical","mass_kg":"jpl_planet_physical","orbit_radius_km":"jpl_planet_orbit","position":"jpl_planet_orbit","landable":"game_landing"}
+    },
+    {
+      "id": "sol.uranus", "parent_id": "sol", "name": "천왕성 (Uranus)", "kind": "planet",
+      "radius_km": 25362, "orbit_radius_km": 2870658171, "distance_ly": null, "landable": false,
+      "mass_kg": 8.68099e+25, "phase_deg": 313.23810451, "period_days": 30687.153, "provenance": {"radius_km":"jpl_planet_physical","mass_kg":"jpl_planet_physical","orbit_radius_km":"jpl_planet_orbit","position":"jpl_planet_orbit","landable":"game_landing"}
+    },
+    {
+      "id": "sol.neptune", "parent_id": "sol", "name": "해왕성 (Neptune)", "kind": "planet",
+      "radius_km": 24622, "orbit_radius_km": 4498396417, "distance_ly": null, "landable": false,
+      "mass_kg": 1.024092e+26, "phase_deg": -55.12002969, "period_days": 60190.02963, "provenance": {"radius_km":"jpl_planet_physical","mass_kg":"jpl_planet_physical","orbit_radius_km":"jpl_planet_orbit","position":"jpl_planet_orbit","landable":"game_landing"}
+    },
+    {
+      "id": "sol.earth.moon", "parent_id": "sol.earth", "name": "달 (Moon)", "kind": "moon",
+      "radius_km": 1737.4, "orbit_radius_km": 384400, "distance_ly": null, "landable": true,
+      "mass_kg": 7.3458e+22, "phase_deg": 218.5, "period_days": 27.322, "provenance": {"radius_km":"jpl_lunar_physical","mass_kg":"jpl_lunar_mass","orbit_radius_km":"jpl_lunar_orbit","position":"jpl_lunar_orbit","landable":"game_landing"}
+    },
+    {
+      "id": "nearby.proxima-centauri", "parent_id": null, "name": "프록시마 센타우리 (Proxima Centauri)", "kind": "star",
+      "radius_km": null, "orbit_radius_km": null, "distance_ly": 4.24, "landable": false,
+      "mass_kg": null, "phase_deg": null, "period_days": null, "provenance": {"distance_ly":"nasa_proxima","landable":"game_landing"}
+    },
+    {
+      "id": "nearby.barnards-star", "parent_id": null, "name": "바너드별 (Barnard's Star)", "kind": "star",
+      "radius_km": null, "orbit_radius_km": null, "distance_ly": 5.96, "landable": false,
+      "mass_kg": null, "phase_deg": null, "period_days": null, "provenance": {"distance_ly":"esa_stars","landable":"game_landing"}
+    },
+    {
+      "id": "nearby.sirius", "parent_id": null, "name": "시리우스 (Sirius)", "kind": "star",
+      "radius_km": null, "orbit_radius_km": null, "distance_ly": 8.58, "landable": false,
+      "mass_kg": null, "phase_deg": null, "period_days": null, "provenance": {"distance_ly":"esa_stars","landable":"game_landing"}
+    }
+  ]
+}
