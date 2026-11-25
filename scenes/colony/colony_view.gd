@@ -57,6 +57,10 @@ var _entity_root: Node3D
 var _deposit_nodes := {}
 var _building_nodes := {}
 var _ghost: MeshInstance3D
+var _guide_ring: MeshInstance3D
+var _guided_deposit := ""
+var _management_layer: CanvasLayer
+var _management_visible := true
 var _camera: Camera3D
 var _yaw := 0.6
 var _pitch := 0.95
@@ -100,6 +104,44 @@ func configure(router: RefCounted, colony_module: RefCounted, colony_id: String)
 		_attach()
 
 
+func show_management(details: bool) -> void:
+	_management_visible = details
+	if _management_layer != null:
+		_management_layer.visible = details
+	if _grid_node != null:
+		_grid_node.visible = details
+	if not details and _ghost != null:
+		_ghost.hide()
+	if _guide_ring != null:
+		_guide_ring.visible = not details
+	_dirty = true
+
+
+func focus_deposit(id: String) -> void:
+	for deposit: Dictionary in _colony().get("deposits", []):
+		if deposit["id"] != id:
+			continue
+		_guided_deposit = id
+		_dirty = true
+		_target = _cell_center(deposit["grid_x"], deposit["grid_y"])
+		_distance = 64.0
+		if _guide_ring == null:
+			_guide_ring = MeshInstance3D.new()
+			var ring := TorusMesh.new()
+			ring.inner_radius = 4.5
+			ring.outer_radius = 5.2
+			_guide_ring.mesh = ring
+			var glow := StandardMaterial3D.new()
+			glow.albedo_color = Color("#ffce73")
+			glow.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			_guide_ring.material_override = glow
+			_guide_ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			add_child(_guide_ring)
+		_guide_ring.position = _target + Vector3.UP * 0.65
+		_guide_ring.visible = not _management_visible
+		return
+
+
 func _process(delta: float) -> void:
 	if _router == null:
 		return
@@ -108,7 +150,8 @@ func _process(delta: float) -> void:
 	if _heights.is_empty():
 		return
 	_update_camera(delta)
-	_update_hover()
+	if _management_visible:
+		_update_hover()
 	if _dirty:
 		_dirty = false
 		_refresh()
@@ -197,6 +240,7 @@ func _build_world() -> void:
 	add_child(_terrain_node)
 	_grid_node = MeshInstance3D.new()
 	_grid_node.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_grid_node.visible = _management_visible
 	add_child(_grid_node)
 	_pad_node = MeshInstance3D.new()
 	add_child(_pad_node)
@@ -338,6 +382,10 @@ func _sync_entities() -> void:
 	if colony.is_empty():
 		return
 	var initial: int = _colony_module.balance.data["deposit"]["initial_remaining"]
+	var guided_miner := false
+	for building: Dictionary in colony["buildings"]:
+		if building["type"] == "miner" and building["deposit_id"] == _guided_deposit:
+			guided_miner = true
 	for deposit: Dictionary in colony["deposits"]:
 		var node: Node3D = _deposit_nodes.get(deposit["id"])
 		if node == null:
@@ -361,7 +409,10 @@ func _sync_entities() -> void:
 		var fraction := clampf(float(deposit["remaining"]) / float(initial), 0.0, 1.0)
 		node.get_node("Body").scale = Vector3(1.0, lerpf(0.25, 1.0, fraction), 1.0)
 		var note := "" if deposit["resource"] == "ore" else " (정보용)"
-		node.get_node("Label").text = "%s %d%s" % [RESOURCE_KO[deposit["resource"]], deposit["remaining"], note]
+		var deposit_label: Label3D = node.get_node("Label")
+		deposit_label.visible = _management_visible or (deposit["id"] == _guided_deposit and not guided_miner)
+		deposit_label.text = "%s %d%s" % [RESOURCE_KO[deposit["resource"]], deposit["remaining"], note] \
+				if _management_visible else "광석"
 	var status := {}
 	for entry: Dictionary in _summary.get("buildings", []):
 		status[entry["id"]] = entry["status"]
@@ -380,10 +431,14 @@ func _sync_entities() -> void:
 			node.add_child(mesh)
 			var name_ko: String = _colony_module.balance.building(building["type"]).get("name_ko", building["type"])
 			var label := _make_label3d(name_ko, size.y + 3.0)
+			label.name = "Label"
 			node.add_child(label)
 			node.position = _cell_center(building["grid_x"], building["grid_y"])
 			_entity_root.add_child(node)
 			_building_nodes[building["id"]] = node
+		var building_label: Label3D = node.get_node("Label")
+		building_label.visible = _management_visible or (building["type"] == "miner" and
+				building["deposit_id"] == _guided_deposit)
 		var material: StandardMaterial3D = node.get_node("Body").material_override
 		var stopped: bool = status.get(building["id"], "RUNNING") == "STOPPED"
 		material.emission_enabled = stopped
@@ -529,10 +584,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			MOUSE_BUTTON_WHEEL_DOWN:
 				_distance = clampf(_distance * 1.1, 30.0, 700.0)
 			MOUSE_BUTTON_LEFT:
-				_place_at_hover()
+				if _management_visible:
+					_place_at_hover()
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT:
 		_dragging = event.pressed
 	elif event is InputEventKey and event.pressed and not event.echo:
+		if not _management_visible:
+			return
 		match event.keycode:
 			KEY_1, KEY_2, KEY_3, KEY_4, KEY_5:
 				_set_selected(BUILD_ORDER[event.keycode - KEY_1])
@@ -571,6 +629,8 @@ func _toggle_pause() -> void:
 
 func _build_ui() -> void:
 	var layer := CanvasLayer.new()
+	_management_layer = layer
+	layer.visible = _management_visible
 	add_child(layer)
 	var margin := MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
