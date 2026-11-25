@@ -1,0 +1,97 @@
+{
+	"balance_version": 1,
+	"provenance": {
+		"data_status": "generated",
+		"note": "모든 수치는 MVP_SPEC.md 4장의 게임 가정치입니다. 실제 관측값이 아닙니다.",
+		"source": "MVP_SPEC.md section 4 (initial balance draft)"
+	},
+	"grid": {
+		"size_m": 512,
+		"cell_m": 8,
+		"cells": 64,
+		"landing_pad_cell": [32, 32],
+		"landing_pad_reserved_radius_cells": 1
+	},
+	"storage": {
+		"base_capacity": 100,
+		"ship_cargo_limit": 200
+	},
+	"deposit": {
+		"initial_remaining": 1000,
+		"counts": {"ore": 4, "ice": 2, "silicon": 2},
+		"minable": ["ore"],
+		"edge_margin_cells": 2,
+		"min_spacing_cells": 4,
+		"landing_clear_radius_cells": 5
+	},
+	"process_order": ["solar", "miner", "refiner", "lab"],
+	"buildings": {
+		"solar": {
+			"name_ko": "태양광 발전기",
+			"cost": {"metal": 10, "parts": 2},
+			"power_supply": 10
+		},
+		"miner": {
+			"name_ko": "채굴기",
+			"cost": {"metal": 10, "parts": 2},
+			"power_use": 3,
+			"mine_rate": 2,
+			"requires_deposit_resource": "ore"
+		},
+		"refiner": {
+			"name_ko": "정제기",
+			"cost": {"metal": 15, "parts": 3},
+			"power_use": 4,
+			"input": {"ore": 2},
+			"output": {"metal": 1}
+		},
+		"warehouse": {
+			"name_ko": "창고",
+			"cost": {"metal": 5},
+			"capacity_bonus": 100
+		},
+		"lab": {
+			"name_ko": "연구소",
+			"cost": {"metal": 10, "parts": 5},
+			"power_use": 2,
+			"input": {"metal": 1},
+			"research_output": 1
+		}
+	},
+	"research": {
+		"mining_efficiency_1": {
+			"threshold": 20,
+			"miner_rate_bonus": 1
+		}
+	},
+	"terrain": {
+		"default": {
+			"name_ko": "생성 지형",
+			"base_height_m": 0.0,
+			"relief_m": 5.0,
+			"crater_count": 7,
+			"crater_radius_cells": [3, 8],
+			"crater_depth_m": 3.0,
+			"ground_color": [0.55, 0.55, 0.57],
+			"shade_color": [0.30, 0.30, 0.33]
+		},
+		"bodies": {
+			"sol.earth.moon": {
+				"name_ko": "달 (Moon) 생성 지형",
+				"relief_m": 4.0,
+				"crater_count": 9,
+				"crater_depth_m": 3.5,
+				"ground_color": [0.62, 0.62, 0.64],
+				"shade_color": [0.27, 0.27, 0.30]
+			},
+			"sol.mars": {
+				"name_ko": "화성 (Mars) 생성 지형",
+				"relief_m": 7.0,
+				"crater_count": 5,
+				"crater_depth_m": 2.5,
+				"ground_color": [0.70, 0.42, 0.28],
+				"shade_color": [0.36, 0.20, 0.14]
+			}
+		}
+	}
+}
